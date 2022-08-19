@@ -1,0 +1,12 @@
+
+
+
+.homeBox{
+    width: 100vw;
+    height: 100vh;
+}
+.contentBox{
+    width: 100%;
+    flex: 1;
+    overflow-y: scroll;
+}

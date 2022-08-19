@@ -1,0 +1,28 @@
+.headBox{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+#avatar{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    border-radius: 50%;
+}
+
+/* 用户名样式 */
+#cardUsername{
+    font-size: 12px;
+    color: #67616D;
+}
+#channel{
+    border-radius: 10px;
+    border: 1px solid #D3C1E5;
+    height: 20px;
+    padding: 0px 10px;
+    color: #8560A9;
+}

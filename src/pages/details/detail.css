@@ -1,0 +1,83 @@
+.basicInformation {
+    margin: 0px 16px 10px 16px
+}
+
+#channel {
+    border-radius: 10px;
+    border: 1px solid #D3C1E5;
+    font-size: 12px;
+    padding: 0px 10px;
+    color: #8560A9;
+}
+
+#ActivityName {
+    font-size: 20px;
+    color: #453257;
+    margin-bottom: 8px;
+}
+
+#publisherInforBox {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#publisherBox {
+    margin-right: 10px;
+}
+
+#publisherName {
+    font-size: 14px;
+    color: #67616D;
+}
+
+#publishTime {
+    color: #BABABA;
+    font-size: 12px;
+}
+
+#routerStyle {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    border: 1px solid #E8E8E8;
+    border-left: none;
+    border-right: none;
+    top: 0;
+    background-color: white;
+    position: sticky;
+}
+
+.underline {
+    margin: 10px 0px 10px 0;
+    width: 100%;
+    height: 5px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.Trisection {
+
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #E8E8E8;
+}
+
+#lastItem {
+    border-right: none;
+}
+.chosenAstyle{
+    color: #AECB4F;
+    text-decoration-line: none !important;
+    font-size: 12px;
+    vertical-align: middle;
+}
+.dropAstyle {
+    color: #8C8C8C;
+    text-decoration-line: none !important;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.verticalmiddle {
+    vertical-align: middle;
+}
+

@@ -1,0 +1,21 @@
+.flexdisplaybetweeen{
+    display: flex;
+    justify-content: space-between;
+}
+.avatorStyle{
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    background-color: blueviolet;
+    margin: 0 10px;
+}
+#paticipantCollapseBtn{
+    background: url(../../../assets/SVGs/check-outline.svg);
+    stroke: rgba(172, 142, 201, 1);
+    width: 24px;
+    height: 24px;
+    border: none;
+}
+.leftpartstyle{
+    min-width: 87px;
+}

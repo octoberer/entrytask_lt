@@ -1,0 +1,9 @@
+#hasImageBox{
+    display: flex;
+}
+#NoImageActivityCardBox{
+    flex:3
+}
+#ImageActivityCardBox{
+    flex:1
+}

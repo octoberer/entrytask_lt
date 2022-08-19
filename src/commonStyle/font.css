@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "SourceSansPro-Bold";
+    src: url("../assets/font/SourceSansPro-Bold.pfb.ttf");
+}
+@font-face{
+    font-family: "SourceSansPro-Semibold";
+    src: url("../assets/font/SourceSansPro-Semibold.ttf");
+    
+}
+@font-face{
+    font-family: "SourceSansPro-Regular";
+    src: url("../assets/font/SourceSansPro-Regular.ttf");
+    
+}
+.Semibold{
+    font-family: "SourceSansPro-Semibold";
+}
+.Bold{
+    font-family: "SourceSansPro-Bold";
+}
+.Regular{
+    font-family: "SourceSansPro-Regular";
+}

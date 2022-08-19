@@ -1,0 +1,97 @@
+
+.backgroundstyle{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(../../assets/Imgs/Street-Dance-01.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -2;
+    background-position: center center
+}
+.pinkcloak{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #8560A9;
+    opacity: 0.3;
+    z-index: -1;
+    /* display: none; */
+}
+
+.slogan{
+    padding-top: 69px;
+    text-align: center;
+    color: #D5EF7F;
+    font-size: 16px;
+    opacity: 100%;
+    font-family: 'SourceSansPro-Semibold';
+}
+.appName{
+    margin-top: 15px;
+    text-align: center;
+    color: #D5EF7F;
+    font-size:24px;
+    opacity: 100%;
+    font-family: 'SourceSansPro-Bold';
+}
+#loginLogo{
+    height: 64px;
+    width: 64px;
+    border:1px solid #D5EF7F;
+    border-radius: 50px;
+    margin: 120px auto 100px auto;
+    text-align: center;
+}
+.logoCat{
+    fill: #D5EF7F;
+}
+.inputOutterBox{
+    border-radius: 20px;
+    width: 240px ;
+    height: 40px;
+    border:1px solid white;
+    display: table;
+    margin: 20px auto 0px auto;
+}
+.inputOutterBox:hover{
+    background-color:rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    border:1px solid white;
+ }
+
+
+.inputInnerBox{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.logoMargin{
+    margin: 0px 20px 0px 0px;
+} 
+
+.loginInformationInput{
+    border:0;
+    outline:0;
+    font-size: 16px;
+    background-color: rgb(0,1,2,0);
+}
+
+
+
+#SigninButton{
+    position: absolute;
+    bottom: 0 ;
+    left:0;
+    height: 64px;
+    background-color: #D5EF7F;
+    text-align: center;
+    width:100%;
+    font-family: "SourceSansPro-Semibold";
+    font-size: 16px;
+    border:0 solid white;
+}

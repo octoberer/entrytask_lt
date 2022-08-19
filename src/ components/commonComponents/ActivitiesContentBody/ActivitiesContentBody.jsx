@@ -18,7 +18,7 @@ export default function ActivitiesContentBody(props) {
   useEffect(() => {
     changeGoingState(params.me_going)
     changeLikeState(params.me_likes)
-  }, [])
+  }, [params])
   function clkJoin(id) {
     console.log('id',id)
     if(me_going){

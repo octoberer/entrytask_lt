@@ -27,7 +27,7 @@ const SearchResultComponents = (props) => {
       <button
         onClick={() => { clearSearchEvents() }}
         style={{ color: '#67616D', fontSize: "10px", border: '0px solid', borderRadius: '12px', backgroundColor: '#D5EF7F', padding: '5px 20px' }}>CLEAR SEARCH</button>
-      <div style={{ color: '#67616D', fontSize: "12px", marginTop: '10px' }} className="Regular">Searched for {Array.isArray(SearchValue.chosenChannels)?(getchannelsStr(SearchValue.chosenChannels)):(SearchValue.chosenChannels.value)} Activities from {props.SearchValue.after} to {props.SearchValue.before}</div>
+      <div style={{ color: '#67616D', fontSize: "12px", marginTop: '10px' }} className="Regular">Searched for {Array.isArray(SearchValue.chosenChannels) ? (getchannelsStr(SearchValue.chosenChannels)) : (SearchValue.chosenChannels.value)} Activities from {props.SearchValue.after} to {props.SearchValue.before}</div>
     </div >
   }
   return
@@ -41,7 +41,9 @@ export default function Index(props) {
   const [listMove, changeListMovedirection] = useState(null);
   const { showDrawerfunc, showDrawer, searchEvents, SearchValue } = props;
 
-  console.log(searchEvents)
+  const [refresh, changeRefreshstate] = useState(false);
+
+  console.log("_________进入函数组件")
   // 定义list移不移动，向哪移动
   if (showDrawer === false && listMove !== false) {
     changeListMovedirection(false);
@@ -66,7 +68,7 @@ export default function Index(props) {
         // console.log('eventsData', eventsData)
         if (!response.error) {
           if (!bs) {
-            console.log('first time', response.events)
+            // console.log('first time', response.events)
             changeEventsData(response.events)
           }
           else {
@@ -74,8 +76,9 @@ export default function Index(props) {
             changeEventsData((eventsData) => {
               return eventsData.concat(response.events)
             })
-            bs.finishPullUp()
           }
+          bs.finishPullUp()
+          bs.refresh()
         }
       })
       .catch((error) => {
@@ -83,36 +86,42 @@ export default function Index(props) {
       });
   }
   function clearSearchEvents_list() {
-    console.log('将数据置为null')
+    // console.log('将数据置为null')
     doEmptySearchEvents(null)
   }
   useEffect(() => {
-    console.log('useEffect里的searchEvents', searchEvents)
+    console.log('执行了——————searchEvents的useEffect里的')
     doEmptySearchEvents(searchEvents)
   }, [searchEvents])
+  let bs
   useEffect(() => {
+    console.log("_________执行了useEffect", refresh)
     let requestnum = 1
     let wrapper = document.querySelector('.wrapper')
-    let bs = new BetterScroll(wrapper, {
-      scrollY: true,
-      probeType: 3,
-      pullUpLoad: true,
-      click: true
-    })
-    console.log('bs',wrapper,bs)
-    bs.on("pullingUp", () => {
-      console.log('pullingUp')
-      if (canDoNext) {
-        fetcheventsData(10, 10 * (requestnum++), bs)
-      }
-      canDoNext = false
-    })
+    if (!bs) {
+      bs = new BetterScroll(wrapper, {
+        scrollY: true,
+        probeType: 3,
+        pullUpLoad: true,
+        click: true
+      })
+      // console.log('bs',bs)
+      bs.on("pullingUp", () => {
+        console.log('pullingUp')
+        if (canDoNext) {
+          fetcheventsData(10, 10 * (requestnum++), bs)
+        }
+        canDoNext = false
+      })
+    }
+    else {
+      // console.log('else_bs',bs)
+    }
     fetcheventsData(10, 0)
-  }, [])
-  // console.log('emptySearchEvents', emptySearchEvents)
+  }, [refresh])
   return (
     // 规定右移为true，左移为false
-    <div className={"originListStyle "+(listMove === null ? "" : listMove ? "ToRightAnimation" : "ToLeftAnimation")}>
+    <div className={"originListStyle " + (listMove === null ? "" : listMove ? "ToRightAnimation" : "ToLeftAnimation")}>
       {showDrawer &&
         <div id={listMove === null ? "" : listMove ? "cloakdiv" : ""}
           onClick={clkcloak}>
@@ -134,6 +143,7 @@ export default function Index(props) {
               width="25px"
               height="25px"
               className="leftlogo"
+              onClick={() => { changeRefreshstate(!refresh) }}
             ></HomeLogo>
           </Link>
         )}
@@ -144,18 +154,18 @@ export default function Index(props) {
       </div>
       <Routes>
         <Route path="/list" element={
-          <div className="wrapper contentBox"  >
-            <div className="content">
-              {emptySearchEvents !== null && <SearchResultComponents searchEvents={searchEvents} SearchValue={SearchValue}
-                clearSearchEvents={clearSearchEvents_list}
-              />}
-              <ListComponent  eventsData={emptySearchEvents !== null ? emptySearchEvents : eventsData} />
-              {emptySearchEvents === null && <div style={{
-                textAlign: 'center',
-                padding: '10px 0',
-                background: 'aliceblue',
-              }}>上滑Loading More</div>}
-            </div>
+            <div className="wrapper" >
+              <div className="content">
+                {emptySearchEvents !== null && <SearchResultComponents searchEvents={searchEvents} SearchValue={SearchValue}
+                  clearSearchEvents={clearSearchEvents_list}
+                />}
+                <ListComponent eventsData={emptySearchEvents !== null ? emptySearchEvents : eventsData} />
+                {emptySearchEvents === null && <div style={{
+                  textAlign: 'center',
+                  padding: '10px 0',
+                  background: 'aliceblue',
+                }}>上滑Loading More</div>}
+              </div>
           </div>}></Route>
         {/* <Route path="/list/:id" element={<List/>}></Route> */}
         <Route path="/detail/*" element={<Detail />} />

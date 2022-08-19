@@ -20,13 +20,13 @@ export default function DetailsComponent(props) {
     <div >
       <div style={{display:"flex",overflow:"scroll",padding:"0 16px"}}>
         {params.images.map((item) => {
-          return <img width="180px" style={{margin:'20px 10px',borderTopLeftRadius:'20px',borderBottomRightRadius:'20px'}} src={item} alt="" />
+          return <img key={item} width="180px" style={{margin:'20px 10px',borderTopLeftRadius:'20px',borderBottomRightRadius:'20px'}} src={item} alt="" />
         })}
       </div>
       <div className='wrap'>
         <input type="checkbox" className="exp" id="exp" />
         <div className='basicfont text Regular'>
-          <label id="collapsebutton" for="exp" />
+          <label id="collapsebutton" htmlFor="exp" />
           {params.description}
         </div>
       </div>

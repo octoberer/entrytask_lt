@@ -14,8 +14,8 @@ import Detail from "../details/detail";
 import ListComponent from "../../ components/contentComponent/listComponent/listComponent";
 
 BetterScroll.use(PullUpLoad)
-function getchannelsStr(chosenChannels){
-  return chosenChannels.map((item)=>{
+function getchannelsStr(chosenChannels) {
+  return chosenChannels.map((item) => {
     return item.value
   }).join(',')
 }
@@ -23,11 +23,11 @@ const SearchResultComponents = (props) => {
   const { searchEvents, SearchValue, clearSearchEvents } = props
   if (searchEvents != null && SearchValue != null) {
     return < div id="searchBox" className="Semibold" >
-      <div style={{ color: '#8560A9', fontSize: "16px" }}>{props.searchEvents.length}results</div>
+      <div style={{ color: '#8560A9', fontSize: "16px" }}>{searchEvents.length}results</div>
       <button
         onClick={() => { clearSearchEvents() }}
         style={{ color: '#67616D', fontSize: "10px", border: '0px solid', borderRadius: '12px', backgroundColor: '#D5EF7F', padding: '5px 20px' }}>CLEAR SEARCH</button>
-      <div style={{ color: '#67616D', fontSize: "12px", marginTop: '10px' }} className="Regular">Searched for {getchannelsStr(props.SearchValue.chosenChannels)} Activities from {props.SearchValue.after} to {props.SearchValue.before}</div>
+      <div style={{ color: '#67616D', fontSize: "12px", marginTop: '10px' }} className="Regular">Searched for {Array.isArray(SearchValue.chosenChannels) ? (getchannelsStr(SearchValue.chosenChannels)) : (SearchValue.chosenChannels.value)} Activities from {props.SearchValue.after} to {props.SearchValue.before}</div>
     </div >
   }
   return
@@ -41,7 +41,8 @@ export default function Index(props) {
   const [listMove, changeListMovedirection] = useState(null);
   const { showDrawerfunc, showDrawer, searchEvents, SearchValue } = props;
 
-  console.log(searchEvents)
+  const [refresh, changeRefreshstate] = useState(false);
+
   // 定义list移不移动，向哪移动
   if (showDrawer === false && listMove !== false) {
     changeListMovedirection(false);
@@ -63,17 +64,18 @@ export default function Index(props) {
     fetchData("get", `/events?limit=${limit}&&offset=${offset}`)
       .then((response) => {
         canDoNext = true
-        console.log('eventsData', eventsData)
+        // console.log('eventsData', eventsData)
         if (!response.error) {
           if (!bs) {
-            console.log('first time', response.events)
+            // console.log('first time', response.events)
             changeEventsData(response.events)
           }
           else {
-            console.log('eventsData', eventsData)
+            // console.log('eventsData', eventsData)
             changeEventsData((eventsData) => {
               return eventsData.concat(response.events)
             })
+            bs.refresh();
             bs.finishPullUp()
           }
         }
@@ -83,22 +85,27 @@ export default function Index(props) {
       });
   }
   function clearSearchEvents_list() {
-    console.log('将数据置为null')
+    // console.log('将数据置为null')
     doEmptySearchEvents(null)
   }
   useEffect(() => {
-    console.log('useEffect里的searchEvents', searchEvents)
     doEmptySearchEvents(searchEvents)
   }, [searchEvents])
+
   useEffect(() => {
-    console.log('PullUpLoad', PullUpLoad)
+    if (location.pathname === "/home/list" || location.pathname === "/home") {
+      let topBox = document.querySelector(".topBox")
+      topBox.style = "position: fixed;"
+    }
     let requestnum = 1
     let wrapper = document.querySelector('.wrapper')
     let bs = new BetterScroll(wrapper, {
       scrollY: true,
       probeType: 3,
-      pullUpLoad: true,
-      click: true
+      pullUpLoad: {
+        threshold: -30
+      },
+      click:true
     })
     bs.on("pullingUp", () => {
       console.log('pullingUp')
@@ -108,16 +115,15 @@ export default function Index(props) {
       canDoNext = false
     })
     fetcheventsData(10, 0)
-  }, [])
-  console.log('emptySearchEvents', emptySearchEvents)
+  }, [refresh])
+
   return (
     // 规定右移为true，左移为false
-    <div className="originListStyle"
-      id={listMove === null ? "" : listMove ? "listToRightAnimation" : "listToLeftAnimation"}>
-      {showDrawer && <div id={listMove === null
-        ? "" : listMove ? "cloakdiv" : ""}
-        onClick={clkcloak}>
-      </div>}
+    <div className={"originListStyle " + (listMove === null ? "" : listMove ? "ToRightAnimation" : "ToLeftAnimation")}>
+      {showDrawer &&
+        <div id={listMove === null ? "" : listMove ? "cloakdiv" : ""}
+          onClick={clkcloak}>
+        </div>}
       <div className="topBox">
         {location.pathname === "/home/list" && (
           <Search
@@ -135,6 +141,7 @@ export default function Index(props) {
               width="25px"
               height="25px"
               className="leftlogo"
+              onClick={() => { changeRefreshstate(!refresh) }}
             ></HomeLogo>
           </Link>
         )}
@@ -145,12 +152,17 @@ export default function Index(props) {
       </div>
       <Routes>
         <Route path="/list" element={
-          <div className="wrapper" style={{ height: '100vh' }}>
+          <div className="wrapper" >
             <div className="content">
               {emptySearchEvents !== null && <SearchResultComponents searchEvents={searchEvents} SearchValue={SearchValue}
                 clearSearchEvents={clearSearchEvents_list}
               />}
               <ListComponent eventsData={emptySearchEvents !== null ? emptySearchEvents : eventsData} />
+              {emptySearchEvents === null && <div style={{
+                textAlign: 'center',
+                padding: '10px 0',
+                background: 'aliceblue',
+              }}>上滑Loading More</div>}
             </div>
           </div>}></Route>
         {/* <Route path="/list/:id" element={<List/>}></Route> */}

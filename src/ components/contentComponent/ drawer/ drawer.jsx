@@ -161,7 +161,7 @@ export default function Drawer(props) {
             <form onChange={changeDate}>
               {dateArr.map((item) => {
                 return <span key={item} className='dateSize'>
-                  <input type='radio' id={item} value={item} name='date'></input><label for={item}>{item}</label>
+                  <input type='radio' id={item} value={item} name='date'></input><label htmlFor={item}>{item}</label>
                   {chosenActivityTime === "LATER" && item === "LATER" &&
                     <div className='datechoosebox'>
                       <span>
@@ -193,7 +193,7 @@ export default function Drawer(props) {
             {
               channelArr.map((item) => {
                 return <span key={item.id} className="channelspanstyle" >
-                  <input type="checkbox" value={item.name} id={item.id}  ></input><label for={item.id}>{item.name}</label></span>
+                  <input type="checkbox" value={item.name} id={item.id}  ></input><label htmlFor={item.id}>{item.name}</label></span>
               })
             }
           </form>

@@ -11,8 +11,8 @@ import { ReactComponent as Pastlogo } from "../../assets/SVGs/past.svg";
 import { ReactComponent as Pastlogo_outline } from "../../assets/SVGs/past-outline.svg";
 import ListComponent from '../../ components/contentComponent/listComponent/listComponent'
 import NoDataTipComponents from "../../ components/commonComponents/noDataTipComponents/noDataTipComponents";
-export default function index() {
-  let [me_userData, changeMe_userData] = useState({});
+export default function Index() {
+  const [me_userData, changeMe_userData] = useState({});
 
   let [events_likeData, changeEvents_likeData] = useState([]);
   let [events_goingData, changeEvents_goingData] = useState([]);
@@ -20,6 +20,10 @@ export default function index() {
 
   let location = useLocation();
   useEffect(() => {
+    if(location.pathname!=="/home/list"){
+      let topBox=document.querySelector(".topBox")
+      topBox.style=""
+    }
     fetchData("get", "/user")
       .then((response) => {
         // console.log("meresponse", response);

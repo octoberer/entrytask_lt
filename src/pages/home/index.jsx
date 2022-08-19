@@ -2,7 +2,7 @@ import React from "react";
 import {
   useNavigate,
 } from "react-router-dom";
-import List from "../list/index";
+import List from "../list/index copy";
 import { fetchData, userInfo } from "../../config";
 import { useState, useEffect } from "react";
 import Drawer from "../../ components/contentComponent/ drawer/ drawer";

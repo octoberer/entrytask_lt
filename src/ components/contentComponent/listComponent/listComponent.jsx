@@ -6,6 +6,7 @@ import './listComponent.css'
 
 export default function ListComponent(props) {
   let { eventsData } = props
+  console.log('ListComponenteventsData',eventsData)
   return (
     <div className='listBox'>
       {eventsData.length === 0 && <NoDataTipComponents></NoDataTipComponents>}

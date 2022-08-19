@@ -36,6 +36,10 @@ export default function Detail(props) {
   const ActivityID=reg.exec(location.pathname)[0]
   console.log('location',location.pathname)
   useEffect(() => {
+    if(location.pathname!=="/home/list"){
+      let topBox=document.querySelector(".topBox")
+      topBox.style=""
+    }
     fetchData('get', "/events/" + ActivityID)
       .then((response) => {
         console.log("detailresponse", response);

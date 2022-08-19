@@ -4,8 +4,9 @@ import { ReactComponent as ReplyLogo } from "../../../assets/SVGs/reply.svg";
 
 export default function CommentCard(props) {
   const { params } = props
+  // console.log("comments",params)
   return (
-    <div id='outBox'>
+    <div id='outBox' key={params.id}>
       <div id="commenterAvator"><img id="Avatorimg" src={params.user.avatar}></img></div>
       <div id="commentInfor">
         <div>
